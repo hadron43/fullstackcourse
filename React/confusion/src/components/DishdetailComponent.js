@@ -23,15 +23,13 @@ class DishDetail extends Component {
     renderComments(comments) {
         if(comments==null)
             return <div></div>;
-        else {
-            const month = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'];
-            
+        else {       
             const temp = comments.map((comment) => {
                 let d = new Date(comment.date);
                 return (
                     <div key={comment.id}>
                         <p>{comment.comment}</p>
-                        <p>-- {comment.author}, {month[d.getMonth()]} {d.getDay()}, {d.getFullYear()}</p>
+                        <p>-- {comment.author}, {new Intl.DateTimeFormat('en-US', {year:'numeric', month: 'short', day:'2-digit'}).format(new Date(Date.parse(comment.date)))}</p>
                     </div>
                 );
             });
@@ -50,12 +48,14 @@ class DishDetail extends Component {
     render() {
         if(this.props.dish !=null ) {
             return (
-                <div className="row">
-                    <div className="col-12 col-md-5 m-1">
-                        {this.renderDish(this.props.dish)}
-                    </div>
-                    <div className="col-12 col-md-5 m-1">
-                        {this.renderComments(this.props.dish.comments)}
+                <div className="container">
+                    <div className="row">
+                        <div className="col-12 col-md-5 m-1">
+                            {this.renderDish(this.props.dish)}
+                        </div>
+                        <div className="col-12 col-md-5 m-1">
+                            {this.renderComments(this.props.dish.comments)}
+                        </div>
                     </div>
                 </div>
             );
